@@ -84,8 +84,10 @@ export default {
       })
       try {
          const res = await login(this.user)
-      console.log(res)
+      // console.log(res)
       this.$toast.success('登录成功')
+      // 将后端返回的信息存到容器中
+      this.$store.commit('setUser',res.data.data)
       } catch (error) {
         console.log(error);
         this.$toast.fail('登录失败')
