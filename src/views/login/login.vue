@@ -55,7 +55,7 @@ export default {
   data() {
     return {
       user: {
-        mobile: '13912344321',
+        mobile: '13000000000',
         code: '246810'
       },
        isCountDownShow: false, // 控制倒计时和发送按钮的显示状态
@@ -84,10 +84,15 @@ export default {
       })
       try {
          const res = await login(this.user)
-      // console.log(res)
+      console.log(res)
+     
+      if(res.status==201){
       this.$toast.success('登录成功')
-      // 将后端返回的信息存到容器中
+         // 将后端返回的信息存到容器中
       this.$store.commit('setUser',res.data.data)
+      this.$router.push('/my')
+      }
+     
       } catch (error) {
         console.log(error);
         this.$toast.fail('登录失败')

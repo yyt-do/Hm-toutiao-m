@@ -1,9 +1,8 @@
 <template>
   <div class="my_container">
-    <van-cell-group class="my_info">
+    <!-- 已登录 -->
+    <van-cell-group class="my_info" v-if="user">
       <van-cell
-        title="单元格"
-        value="内容"
         center
         class="base_info"
         :border="false"
@@ -17,7 +16,7 @@
           fit="cover"
           slot="icon"
         />
-        <div slot="title" class="name">昵称</div>
+        <div slot="title" class="name">{{currentUser.name}}</div>
         <van-button class="update-btn" round size="mini">编辑资料</van-button>
       </van-cell>
       <van-grid :border="false" class="data_info">
@@ -47,32 +46,77 @@
         </van-grid-item>
       </van-grid>
     </van-cell-group>
-    <van-grid 
-    :column-num="2"
-    class="nav_grid"
-    >
-      <van-grid-item 
-      class="nav_grid_item"
-      icon-prefix="toutiao" 
-      icon="shoucang" 
-      text="收藏" />
+    <!-- 未登录 -->
+    <div class="not-login" v-else>
+      <div class="mobile" @click="lgout"></div>
+      <div class="text">点击登录</div>
+    </div>
+    <van-grid :column-num="2" class="nav_grid mb-4">
       <van-grid-item
-      class="nav_grid_item"
-      icon-prefix="toutiao" 
-      icon="lishi" 
-      text="历史" />
+        class="nav_grid_item"
+        icon-prefix="toutiao"
+        icon="shoucang"
+        text="收藏"
+      />
+      <van-grid-item
+        class="nav_grid_item"
+        icon-prefix="toutiao"
+        icon="lishi"
+        text="历史"
+      />
     </van-grid>
-    <van-cell title="消息通知" is-link to="/" />
-    <van-cell title="小智同学" is-link to="" />
-    <van-cell title="退出登录" to="" class="out_login" />
+    <van-cell title="消息通知" is-link to="/" class="mb-4" />
+    <van-cell title="小智同学" is-link to="" class="mb-4" />
+    <van-cell
+      title="退出登录"
+      class="out_login"
+      v-if="user"
+      @click="onlogin"
+    />
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import{getcurrentUser} from '../../api/user'
 export default {
   name: 'myindex',
   data() {
-    return {}
+    return {
+      currentUser:''
+    }
+  },
+  computed: {
+    ...mapState(['user'])
+  },
+  created(){
+    this.loadCurrentUser()
+  },
+  methods: {
+    // 获取登录用户信息
+    async loadCurrentUser(){
+    const res = await getcurrentUser()
+    console.log(res);
+    this.currentUser =res.data.data
+    },
+    // 用户退出提示框
+    onlogin() {
+      this.$dialog.confirm({
+        title: '退出提示',
+        message: '是否确认退出'
+      })
+        .then(() => {
+          // on confirm
+          this.$store.commit('setUser',null)
+        })
+        .catch(() => {
+          // on cancel
+        })
+    },
+    // 用户登录
+    lgout(){
+      this.$router.push('/login')
+    }
   }
 }
 </script>
@@ -80,6 +124,10 @@ export default {
 <style scoped lang="less">
 .out_login {
   text-align: center;
+  color: #f07b53;
+}
+.mb-4 {
+  margin-bottom: 4px;
 }
 .my_container {
   .my_info {
@@ -130,10 +178,32 @@ export default {
       background-color: unset;
     }
   }
-  .nav_grid{
-     .nav_grid_item{
-       height: 70px;
-     }
+  .nav_grid {
+    .nav_grid_item {
+      height: 70px;
+    }
+  }
+  // 未登录
+  .not-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: url('./banner.png') no-repeat;
+    height: 182px;
+    box-sizing: border-box;
+    background-size: cover;
+    .mobile {
+      background: url('./mobile.png') no-repeat;
+      background-size: cover;
+      width: 66px;
+      height: 66px;
+      margin-bottom: 10px;
+    }
+    .text {
+      font-size: 14px;
+      color: #fff;
+    }
   }
 }
 </style>
