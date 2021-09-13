@@ -8,6 +8,7 @@
         type="info"
         round
         class="search_btn"
+        to="/search"
       >
         搜索
       </van-button>
@@ -63,7 +64,7 @@ export default {
   data() {
     return {
       isChanenlEidtShow: false, //是否展示弹出层
-      active: 1,
+      active: 0,
       channels: ''
     }
   },

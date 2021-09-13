@@ -1,4 +1,3 @@
-
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 // import Login from '@/views/login/login.vue'
@@ -9,39 +8,45 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-     component: ()=>import('@/views/login/login.vue')  // 路由懒加载
+    component: () => import('@/views/login/login.vue') // 路由懒加载
   },
   {
     path: '/',
-     component: ()=>import('@/views/layout'),
-     children:[
-       {
-         path:'',
-         name:'home',
-         component: ()=>import('@/views/home'),
-
-       },
-       {
-        path:'/qa',
-        name:'qa',
-        component: ()=>import('@/views/qa'),
-
+    component: () => import('@/views/layout'),
+    children: [
+      {
+        path: '',
+        name: 'home',
+        component: () => import('@/views/home')
       },
       {
-        path:'/video',
-        name:'video',
-        component: ()=>import('@/views/video'),
-
+        path: '/qa',
+        name: 'qa',
+        component: () => import('@/views/qa')
       },
       {
-        path:'/my',
-        name:'my',
-        component: ()=>import('@/views/my'),
-
+        path: '/video',
+        name: 'video',
+        component: () => import('@/views/video')
+      },
+      {
+        path: '/my',
+        name: 'my',
+        component: () => import('@/views/my')
       }
-     ]
+    ]
   },
-  
+  {
+    path: '/search',
+    name: 'search',
+    component: () => import('@/views/search/') // 路由懒加载
+  },
+  {
+    path: '/article/:articleId', // 路由动态传参
+    name: 'article',
+    component: () => import('@/views/article/'), // 路由懒加载
+    props:true //将路由参数映射到组件的props
+  }
 ]
 
 const router = new VueRouter({

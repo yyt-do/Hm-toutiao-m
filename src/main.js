@@ -6,6 +6,7 @@ import Vant from 'vant';
 import 'vant/lib/index.css';
 import 'amfe-flexible'
 import './styles/index.less';
+import 'github-markdown-css'
 Vue.config.productionTip = false
 Vue.use(Vant);
 new Vue({

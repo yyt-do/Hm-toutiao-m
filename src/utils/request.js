@@ -1,10 +1,22 @@
 import axios from "axios";
 // 非组件模块获取store
 import store from '@/store/'
+// 引入处理后台返回大数据问题
+import jsonBig from 'json-bigint'
 // 创建axios实例
 const request = axios.create({
   baseURL: '/api'
 })
+/**
+ * 配置处理后端返回数据中超出 js 安全整数范围问题
+ */
+ request.defaults.transformResponse = [function (data) {
+  try {
+    return jsonBig.parse(data)
+  } catch (err) {
+    return {}
+  }
+}]
 // 请求拦截器
 request.interceptors.request.use(
   function (config) {
