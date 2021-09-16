@@ -14,7 +14,8 @@ const request = axios.create({
   try {
     return jsonBig.parse(data)
   } catch (err) {
-    return {}
+    console.log(err);
+    return data
   }
 }]
 // 请求拦截器

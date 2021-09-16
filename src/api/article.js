@@ -14,3 +14,20 @@ export const getArticleByID = (articleId) =>{
     url:`/v1_0/articles/${articleId}`,
   })
 }
+// 收藏文章
+export const addCollect   = (articleId) =>{
+  return request({
+    method: 'POST',
+    url:'/v1_0/article/collections',
+    data:{
+      target:articleId
+    }
+  })
+}
+// 取消收藏文章
+export const deleteCollect   = (articleId) =>{
+  return request({
+    method: 'DELETE',
+    url:`/v1_0/article/collections/${articleId}`,
+  })
+}
