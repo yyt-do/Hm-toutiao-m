@@ -15,14 +15,14 @@ const sendSms = mobile => {
     url: `/v1_0/sms/codes/${mobile}`
   })
 }
-// 获取登录用户信息
+// 获取当前登录用户信息
 const getcurrentUser = () => {
   return request({
     method: 'GET',
-    url: '/v1_0/user/profile'
+    url: '/v1_0/user'
   })
 }
-// 获取登录用户信息
+// 获取登录用户的频道
 const getUserChannels = () => {
   return request({
     method: 'GET',
@@ -46,4 +46,37 @@ const deleteFlow = userId => {
     url: `/v1_0/user/followings/${userId}`
   })
 }
-export { login, sendSms, getcurrentUser, getUserChannels, addFlow, deleteFlow }
+// 获取用户资料
+const getUserProfile = () => {
+  return request({
+    method: 'GET',
+    url: '/v1_0/user/profile'
+  })
+}
+// 编辑用户资料
+const updateUserProfile = data => {
+  return request({
+    method: 'PATCH',
+    url: '/v1_0/user/profile',
+    data
+  })
+}
+// 编辑用户头像资料
+const updateUserPhoto = data => {
+  return request({
+    method: 'PATCH',
+    url: '/v1_0/user/photo',
+    data
+  })
+}
+export {
+  login,
+  sendSms,
+  getcurrentUser,
+  getUserChannels,
+  addFlow,
+  deleteFlow,
+  getUserProfile,
+  updateUserProfile,
+  updateUserPhoto
+}

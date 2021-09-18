@@ -11,13 +11,13 @@
           class="avatar"
           width="50"
           height="50"
-          src="https://img01.yzcdn.cn/vant/cat.jpeg"
+          :src="currentUser.photo"
           round
           fit="cover"
           slot="icon"
         />
         <div slot="title" class="name">{{currentUser.name}}</div>
-        <van-button class="update-btn" round size="mini">编辑资料</van-button>
+        <van-button class="update-btn" round size="mini" @click="$router.push('/user/profile')">编辑资料</van-button>
       </van-cell>
       <van-grid :border="false" class="data_info">
         <van-grid-item text="文字" class="data_info_item">

@@ -46,6 +46,11 @@ const routes = [
     name: 'article',
     component: () => import('@/views/article/'), // 路由懒加载
     props:true //将路由参数映射到组件的props
+  },
+  {
+    path: '/user/profile', // 路由动态传参
+    name: 'userProfile',
+    component: () => import('@/views/user-profile/'), // 路由懒加载
   }
 ]
 
