@@ -66,7 +66,7 @@
       />
     </van-grid>
     <van-cell title="消息通知" is-link to="/" class="mb-4" />
-    <van-cell title="小智同学" is-link to="" class="mb-4" />
+    <van-cell title="小智同学" is-link to="/user/chat" class="mb-4" />
     <van-cell
       title="退出登录"
       class="out_login"
@@ -115,7 +115,12 @@ export default {
     },
     // 用户登录
     lgout(){
-      this.$router.push('/login')
+      this.$router.push({
+        name:'login',
+        query:{
+          redirect:'/my'
+        }
+      })
     }
   }
 }

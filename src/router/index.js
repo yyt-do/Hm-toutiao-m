@@ -51,6 +51,11 @@ const routes = [
     path: '/user/profile', // 路由动态传参
     name: 'userProfile',
     component: () => import('@/views/user-profile/'), // 路由懒加载
+  },
+  {
+    path: '/user/chat', // 路由动态传参
+    name: 'userChat',
+    component: () => import('@/views/user-chat/'), // 路由懒加载
   }
 ]
 

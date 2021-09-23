@@ -1,5 +1,5 @@
 <template>
-  <div class="article-list">
+  <div class="article-list" ref="art-list">
     <van-pull-refresh
       :success-text="success_text"
       :success-duration="500"
@@ -30,6 +30,7 @@
 <script>
 import { getArticles } from '../../../api/article'
 import ArticleItem from '@/components/article-item'
+import{debounce} from 'lodash'
 export default {
   name: 'ArticleList',
   components: {
@@ -50,11 +51,25 @@ export default {
       finished: false,
       timestamp: null, //获取下一页数据的时间戳
       ispulldownloading: false, // 控制下啦刷新状态
-      success_text: ''
+      success_text: '',
+      scrolltop:''
     }
   },
   created() {
     this.onLoad()
+  },
+  mounted(){
+    const artileList = this.$refs['art-list']
+    artileList.onscroll = debounce(()=>{
+      this.scrolltop = artileList.scrollTop
+    },50)
+  },
+  // 缓存组件激活
+  activated(){
+    this.$refs['art-list'].scrollTop = this.scrolltop
+  },
+  deactivated(){
+    console.log('缓存组件失效');
   },
   methods: {
     async onLoad() {
